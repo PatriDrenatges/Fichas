@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+    <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Formulario de Datos en dos Hojas</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    background-color: #ffffff;
+                    padding: 20px;
+                    margin: 0;
+                }
+                header {
+                    background-color: #007BFF;
+                    color: white;
+                    padding: 20px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+                header h1 {
+                    margin: 0;
+                    font-size: 30px;
+                    text-align: center;
+                }
+                form {
+                    background-color: white;
+                    padding: 20px;
+                    border-radius: 8px;
+                    max-width: 600px;
+                    margin: 20px auto;
+                }
+                input, select, textarea {
+                    width: 95%;
+                    padding: 10px;
+                    margin: 10px 0;
+                    border-radius: 4px;
+                    border: 1px solid #ccc;
+                }
+               
+                .recuadro {
+                    border: 2px solid #007BFF;
+                    padding: 10px;
+                    border-radius: 8px;
+                    margin-bottom: 20px;
+                    max-width: 100%;
+                    margin: 10px auto;
+                }
+                h3 {
+                    background-color: purple;
+                    color: white;
+                    padding: 10px;
+                    border-radius: 5px;
+                    margin-top: 0;
+                }
+                .circle-container {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin: 20px auto;
+                    flex-wrap: wrap;
+                }
+                .shape {
+                    display: inline-block;
+                    width: 25px;
+                    height: 25px;
+                    background-color: #ddd;
+                    margin: 10px;
+                    cursor: pointer;
+                }
+                .circle, .rectangle, .square, .gallery {
+                    background-color: #000000;
+                }
+                .circle {
+                    border-radius: 50%;
+                }
+                .rectangle {
+                    width: 25px;
+                    height: 12.5px;
+                }
+                .square {
+                    width: 25px;
+                    height: 25px;
+                }
+                .gallery {
+                    position: relative;
+                    width: 25px;
+                    height: 25px;
+                    background-color: hsl(0, 0%, 100%);
+                    overflow: hidden;
+                }
+                .gallery::before {
+                    content: "";
+                    position: absolute;
+                    top: 0;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: 25px;
+                    height: 100px;
+                    background-color: #000000;
+                    border-radius: 50px 50px 0 0;
+                }
+                #formaSelector {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+                #formaSelector input:checked + .shape {
+                    border: 2px solid blue;
+                }
+                label {
+                    text-align: left;
+                    display: block;
+                    margin-left: 10px;
+                }
+                @media (max-width: 600px) {
+                    body, header, form, .recuadro {
+                        padding: 10px;
+                        margin: 10px;
+                        max-width: 100%;
+                    }
+                    header {
+                        flex-direction: column;
+                        align-items: center;
+                        text-align: center;
+                    }
+                    header h1 {
+                        font-size: 18px;
+                    }
+                    .circle-container {
+                        width: 100%;
+                        height: auto;
+                    }
+                    .navigation {
+                        flex-direction: column;
+                        gap: 10px;
+                    }
+
+                   
+                }
+                .button-container button {
+                    width: 150px; /* Ancho fijo para todos los botones */
+                    height: 40px; /* Altura fija para todos los botones */
+                    background-color: #4CAF50;
+                    color: white;
+                    padding: 10px;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    margin: 0 5px;
+                    text-align: center; /* Asegura que el texto esté centrado */
+                }
+
+                .button-container button:hover {
+                    background-color: #45a049;
+                }
+
+                    .button-container {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    gap: 10px; /* Espacio entre botones */
+                    }
+                    button {
+                        background-color: #4CAF50;
+                        color: white;
+                        padding: 10px;
+                        border: none;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        margin: 0 5px;
+                    }
+                     button:hover {
+                        background-color: #45a049;
+                        }
+                     @media (max-width: 600px) {
+                        .button-container {
+                            flex-direction: row; /* Alinea los botones horizontalmente */
+                            justify-content: space-around; /* Distribuye el espacio uniformemente */
+                        }
+                    }
+                    .circle-container {
+                        position: relative;
+                        width: 300px;
+                        height: 300px;
+                        border-radius: 50%;
+                        background-color: transparent;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        border: 2px dashed #007BFF;
+                        margin: 80px auto;
+                    }
+                    .circle-button {
+                        position: absolute;
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                        background-color: #fff;
+                        border: 2px solid #007BFF;
+                        cursor: pointer;
+                        transition: background-color 0.3s, transform 0.3s;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        font-size: 18px;
+                        font-weight: bold;
+                        color: #007BFF;
+                    }
+                    .circle-button.selected {
+                        background-color: purple;
+                        color: white;
+                        transform: scale(1.2);
+                    }
+                    .circle-button:nth-child(3) { transform: rotate(0deg) translate(150px) rotate(0deg); }
+                    .circle-button:nth-child(4) { transform: rotate(45deg) translate(150px) rotate(-45deg); }
+                    .circle-button:nth-child(5) { transform: rotate(90deg) translate(150px) rotate(-90deg); }
+                    .circle-button:nth-child(6) { transform: rotate(135deg) translate(150px) rotate(-135deg); }
+                    .circle-button:nth-child(7) { transform: rotate(180deg) translate(150px) rotate(-180deg); }
+                    .circle-button:nth-child(8) { transform: rotate(225deg) translate(150px) rotate(-225deg); }
+                    .circle-button:nth-child(1) { transform: rotate(270deg) translate(150px) rotate(-270deg); }
+                    .circle-button:nth-child(2) { transform: rotate(315deg) translate(150px) rotate(-315deg); }
+                    .sobreeixidor { 
+                        background-color: red !important;
+                        color: white !important;
+                    }
+                    .escomesa { 
+                        background-color: yellow !important;
+                        color: black !important;
+                    }
+                    .escomesa-captacio { 
+                        background-color: rgb(107, 149, 212) !important;
+                        color: black !important;
+                    }
+                    .salida {
+                        background-color: purple !important;
+                        color: white !important;
+                    }
+                    .green-background { background-color: hsl(120, 100%, 44%); } /* Verde */
+                    .yellow-background { background-color: hwb(59 0% 0%); } /* Amarillo */
+                    .red-background { background-color: #ff0707; } /* Rojo */               
+            </style>   
+    </head>
+<body>
+            <header>
+                <h1>Drenatges Urbans</h1>
+            </header>
+                <div id="municipios">
+                    <h2>Selecciona Municipi</h2>
+                    <select id="municipioSelect">
+                        <option value="">-- Selecciona Municipi --</option>
+                        <option value="PALAU">PALAU</option>
+                        <option value="MOLLET">MOLLET</option>
+                        <option value="SENTMENAT">SENTMENAT</option>
+                        <option value="POLINYÀ">POLINYÀ</option>
+                        <option value="STA PERPETUA">STA PERPETUA</option>
+                        <option value="LA LLAGOSTA">LA LLAGOSTA</option>
+                        <option value="SANT FOST">SANT FOST</option>
+                        <option value="MARTORELLES">MARTORELLES</option>
+                        <option value="STA MARIA MARTORELLES">STA MARIA MARTORELLES</option>
+                        <option value="LLIÇA DE VALL">LLIÇA DE VALL</option>
+                        <option value="LLIÇA D'AMUNT">LLIÇA D'AMUNT</option>
+                        <option value="MONTMELÓ">MONTMELÓ</option>
+                        <option value="MONTORNÈS">MONTORNÈS</option>
+                        <option value="VALLROMANES ">VALLROMANES</option>
+                        <option value="VILANOVA ">VILANOVA</option>
+                        <option value="PARETS">PARETS</option>
+                        <option value="GRANOLLERS">GRANOLLERSS</option>
+                        <option value="LES FRANQUESES">LES FRANQUESES</option>
+                        <option value="CANOVELLES ">CANOVELLES</option>     
+                    </select>
+                </div>
+        <form id="infraForm">
+            <div id="infoFija" class="recuadro">
+                <label for="municipiInput">Municipi:</label>
+                <input type="text" id="municipiInput" name="municipiInput" readonly>
+                
+                <label for="id_pozo">ID Pou:</label>
+                <input type="text" id="id_pozo" name="id_pozo" required>
+
+                <label for="Dades_Gps">Dades Gps:</label>
+                <select id="Dades_Gps" name="Dades_Gps" >
+                    <option value="">-- Selecciona --</option>
+                    <option value="01">0-5</option>
+                    <option value="02">5-10</option>
+                    <option value="03">No_GPS</option>
+                   
+                    </select>
+            </div>
+            <div class="circle-container">
+            <div class="circle-button selected">8</div>
+                    <div class="circle-button"  data-target="entrada1">1</div>
+                    <div class="circle-button"  data-target="entrada2">2</div>
+                    <div class="circle-button"  data-target="entrada3">3</div>
+                    <div class="circle-button"  data-target="entrada4">4</div>
+                    <div class="circle-button"  data-target="entrada5">5</div>
+                    <div class="circle-button"  data-target="entrada6">6</div>
+                    <div class="circle-button"  data-target="entrada7">7</div>
+            </div>
+
+            <form id="infraForm">
+                <div id="infoFija" class="recuadro">
+                    
+                    <label for="prop_solera">Prof. Solera:</label>
+                    <input type="text" id="prop_solera" name="prop_solera">
+                </div>
+
+        <!-- Ficha salida -->
+        <div id="salida" class="recuadro salida-recuadro">
+            <h3 class="salida">Sortida</h3>
+            
+            <label for="profundidad">Profunditat:</label>
+            <input type="text" id="profundidad" name="profundidad" pattern="[0-9]+([,][0-9]+)?" title="Por favor, introduce un número válido. Usa ',' para decimales.">
+
+            
+            <label for="forma">Forma:</label>
+            <select id="forma" name="forma" onchange="updateFormaSelector(this.value)">
+                <option value="">-- Selecciona --</option>
+                <option value="C">Circular</option>
+                <option value="R">Rectangular</option>
+                <option value="Q">Quadrat</option>
+                <option value="G">Rectangular amb Galeria</option>  
+            </select>
+            
+            <div id="formaSelector" style="margin-top: 10px;">
+                <label>
+                    <input type="radio" name="forma" value="C" id="circulo" hidden />
+                    <span class="shape circle" onclick="selectForma('circulo')"></span>
+                </label>
+                <label>
+                    <input type="radio" name="forma" value="R" id="rectangulo" hidden />
+                    <span class="shape rectangle" onclick="selectForma('rectangulo')"></span>
+                </label>
+                <label>
+                    <input type="radio" name="forma" value="Q" id="cuadrado" hidden />
+                    <span class="shape square" onclick="selectForma('cuadrado')"></span>
+                </label>
+                <label>
+                    <input type="radio" name="forma" value="G" id="galeria" hidden />
+                    <span class="shape gallery" onclick="selectForma('galeria')"></span>
+                </label>
+            </div>
+            
+            <label for="dimension0_1">Dim1:</label>
+            <input type="text" id="dimension0_1" name="dimension0_1">
+            
+            <label for="dimension0_2">Dim2:</label>
+            <input type="text" id="dimension0_2" name="dimension0_2">
+            
+            <label for="material">Material:</label>
+            <select id="material" name="material">
+                <option value="">-- Selecciona --</option>
+                <option value="hormigon">FORMIGÓ</option>
+                <option value="pvc">PVC</option>
+                <option value="pec">PEC</option>
+                <option value="obra">Obra</option>  
+                <option value="prfv">PRFV</option>
+                <option value="nodefinido">NO DEFINIDO</option>  
+            </select>
+            
+            <label for="pozo_direccion">Pou Direcció:</label>
+            <input type="text" id="pozo_direccion" name="pozo_direccion">
+        </div>
+        
+        <!-- Entradas 1-7 -->
+                    <!-- Ficha Entrada1 -->
+                <div id="entrada1" class="recuadro" style="display:none;">
+                    <h3>Entrada 1:</h3>
+                    <label for="profundidad1">Profunditat:</label>
+                    <input type="number" id="profundidad1" name="profundidad1">
+                    <label for="forma1">Forma:</label>
+                    <select id="forma1" name="forma1" >
+                    <option value="">-- Selecciona --</option>
+                    <option value="C">Circular</option>
+                    <option value="R">Rectangular</option>
+                    <option value="Q">Quadrat</option>
+                    <option value="G">Rectangular amb Galeria</option>   
+                    </select>
+                    <label for="dimension1_1">Dim1:</label>
+                    <input type="text" id="dimension1_1" name="dimension1_1" >
+                    <label for="dimension1_2">Dim2:</label>
+                    <input type="text" id="dimension1_2" name="dimension1_2" >
+                    <label for="material1">Material:</label>
+                                <select id="material1" name="material1" >
+                                <option value="">-- Selecciona --</option>
+                                <option value="hormigon">FORMIGÓ</option>
+                                <option value="pvc">PVC</option>
+                                <option value="pec">PEC</option>
+                                <option value="obra">Obra</option>  
+                                <option value="prfv">PRFV</option>
+                                <option value="nodefinido">NO DEFINIDO</option>  
+                                </select>
+                    <label for="pozo_direccion1">Pou Origen:</label>
+                    <input type="text" id="pozo_direccion1" name="pozo_direccion1" >
+                    <label for="Altres_Sortidas_1">Tipus Conexió:</label>
+                                <select id="Altres_Sortidas_1" name="Altres_Sortidas_1" class="Altres_Sortidas_1">
+                                <option value="">-- Selecciona --</option>
+                                <option value="Sobreeixidor">Sobreeixidor</option>
+                                <option value="Escomesa">Escomesa</option>
+                                <option value="Escomesa Captacio">Escomesa Captacio</option>
+                                </select>
+                    <button type="button" class="delete-button">Eliminar</button>
+                    </div>
+                    <!-- Ficha Entrada2 -->
+                    <div id="entrada2" class="recuadro" style="display:none;">
+                        <h3>Entrada 2:</h3>
+                        <label for="profundidad2">Profunditat:</label>
+                        <input type="number" id="profundidad2" name="profundidad2" >
+                        <label for="forma2">Forma:</label>
+                                    <select id="forma2" name="forma2" >
+                                    <option value="">-- Selecciona --</option>
+                                    <option value="C">Circular</option>
+                                    <option value="R">Rectangulo</option>
+                                    <option value="Q">Cuadrado</option>
+                                    <option value="G">Galeria</option>  
+                                    </select>
+                        <label for="dimension2_1">Dim1:</label>
+                        <input type="text" id="dimension2_1" name="dimension2_1" >
+                        <label for="dimension3_2">Dim2:</label>
+                        <input type="text" id="dimension2_2" name="dimension2_2" >
+                        <label for="material2">Material:</label>
+                                    <select id="material2" name="material2" >
+                                    <option value="">-- Selecciona --</option>
+                                    <option value="hormigon">FORMIGÓ</option>
+                                    <option value="pvc">PVC</option>
+                                    <option value="pec">PEC</option>
+                                    <option value="obra">Obra</option>  
+                                    <option value="prfv">PRFV</option>
+                                    <option value="nodefinido">NO DEFINIDO</option>  
+                                    </select>
+                        <label for="pozo_direccion2">Pou Origen:</label>
+                        <input type="text" id="pozo_direccion2" name="pozo_direccion2" >
+                        <label for="Altres_Sortidas_2">Tipus Conexió:</label>
+                        <select id="Altres_Sortidas_2" name="Altres_Sortidas_2" class="Altres_Sortidas_2">
+                                    <option value="">-- Selecciona --</option>
+                                    <option value="Sobreeixidor">Sobreeixidor</option>
+                                    <option value="Escomesa">Escomesa</option>
+                                    <option value="Escomesa Captacio">Escomesa Captacio</option>
+                                    </select>
+                            <button type="button" class="delete-button">Eliminar</button>     
+
+                    </div>
+                    <!-- Ficha Entrada3 -->
+                    <div id="entrada3" class="recuadro" style="display:none;">
+                            <h3>Entrada 3:</h3>
+                            <label for="profundidad3">Profunditat:</label>
+                            <input type="number" id="profundidad3" name="profundidad3" >
+                            <label for="forma3">Forma:</label>
+                            <select id="forma3" name="forma3" >
+                                    <option value="">-- Selecciona --</option>
+                                    <option value="C">Circular</option>
+                                    <option value="R">Rectangulo</option>
+                                    <option value="Q">Cuadrado</option>
+                                    <option value="G">Galeria</option>  
+                                    </select>
+                            <label for="dimension3_1">Dim1:</label>
+                            <input type="text" id="dimension3_1" name="dimension3_1" >
+                            <label for="dimension3_2">Dim2:</label>
+                            <input type="text" id="dimension3_2" name="dimension3_2" >
+                            <label for="material3">Material:</label>
+                            <select id="material3" name="material3" >
+                                    <option value="">-- Selecciona --</option>
+                                    <option value="hormigon">FORMIGÓ</option>
+                                    <option value="pvc">PVC</option>
+                                    <option value="pec">PEC</option>
+                                    <option value="obra">Obra</option>  
+                                    <option value="prfv">PRFV</option>
+                                    <option value="nodefinido">NO DEFINIDO</option>  
+                                    </select>
+                            <label for="pozo_direccion3">Pou Origen:</label>
+                            <input type="text" id="pozo_direccion3" name="pozo_direccion3" >
+                            <label for="Altres_Sortidas_3">Tipus Conexió:</label>
+                            <select id="Altres_Sortidas_3" name="Altres_Sortidas_3" class="Altres_Sortidas_3">
+                                    <option value="">-- Selecciona --</option>
+                                    <option value="Sobreeixidor">Sobreeixidor</option>
+                                    <option value="Escomesa">Escomesa</option>
+                                    <option value="Escomesa Captacio">Escomesa Captacio</option>
+                                    </select>
+                        <button type="button" class="delete-button">Eliminar</button> 
+                    </div>
+                    <!-- Ficha Entrada4 -->
+                    <div id="entrada4" class="recuadro" style="display:none;">
+                            <h3>Entrada 4:</h3>
+                            <label for="profundidad4">Profunditat:</label>
+                            <input type="number" id="profundidad4" name="profundidad4" >
+                            <label for="forma4">Forma:</label>
+                                    <select id="forma4" name="forma4" >
+                                        <option value="">-- Selecciona --</option>
+                                        <option value="C">Circular</option>
+                                        <option value="R">Rectangulo</option>
+                                        <option value="Q">Cuadrado</option>
+                                        <option value="G">Galeria</option>  
+                                    </select>
+                            <label for="dimension4_1">Dim1:</label>
+                            <input type="text" id="dimension4_1" name="dimension4_1" >
+                            <label for="dimension4_2">Dim2:</label>
+                            <input type="text" id="dimension4_2" name="dimension4_2" >     
+                            
+                            <label for="material4">Material:</label>
+                                    <select id="material4" name="material4" >
+                                    <option value="">-- Selecciona --</option>
+                                    <option value="hormigon">FORMIGÓ</option>
+                                    <option value="pvc">PVC</option>
+                                    <option value="pec">PEC</option>
+                                    <option value="obra">Obra</option>  
+                                    <option value="prfv">PRFV</option>
+                                    <option value="nodefinido">NO DEFINIDO</option>  
+                                    </select>
+                                    <label for="pozo_direccion4">Pou Origen:</label>
+                                    <input type="text" id="pozo_direccion4" name="pozo_direccion4" >
+                            </select>
+                            <label for="Altres_Sortidas_4">Tipus Conexió:</label>
+                            <select id="Altres_Sortidas_4" name="Altres_Sortidas_4" class="Altres_Sortidas_4">
+                                    <option value="">-- Selecciona --</option>
+                                    <option value="Sobreeixidor">Sobreeixidor</option>
+                                    <option value="Escomesa">Escomesa</option>
+                                    <option value="Escomesa Captacio">Escomesa Captacio</option>
+                                    </select>
+                            <button type="button" class="delete-button">Eliminar</button> 
+
+                    </div>
+                    <!-- Ficha Entrada5 -->
+                    <div id="entrada5" class="recuadro" style="display:none;">
+                            <h3>Entrada 5:</h3>      
+                            <label for="profundidad5">Profunditat:</label>
+                            <input type="number" id="profundidad5" name="profundidad5" >
+                            <label for="forma5">Forma:</label>
+                            <select id="forma5" name="forma5" >
+                                <option value="">-- Selecciona --</option>
+                                <option value="C">Circular</option>
+                                <option value="R">Rectangulo</option>
+                                <option value="Q">Cuadrado</option>
+                                <option value="G">Galeria</option>   
+                                    </select>
+                            <label for="dimension5_1">Dim1:</label>
+                            <input type="text" id="dimension5_1" name="dimension5_1" >
+                            <label for="dimension5_2">Dim2:</label>
+                            <input type="text" id="dimension5_2" name="dimension5_2" >
+                            <label for="material5">Material:</label>
+                                    <select id="material5" name="material5" >
+                                    <option value="">-- Selecciona --</option>
+                                    <option value="hormigon">FORMIGÓ</option>
+                                    <option value="pvc">PVC</option>
+                                    <option value="pec">PEC</option>
+                                    <option value="obra">Obra</option>  
+                                    <option value="prfv">PRFV</option>
+                                    <option value="nodefinido">NO DEFINIDO</option>  
+                                    </select>
+                            <label for="pozo_direccion5">Pou Origen:</label>
+                            <input type="text" id="pozo_direccion5" name="pozo_direccion5" >
+                            <label for="Altres_Sortidas_5">Tipus Conexió:</label>
+                            <select id="Altres_Sortidas_5" name="Altres_Sortidas_5" class="Altres_Sortidas_5">
+                                    <option value="">-- Selecciona --</option>
+                                    <option value="Sobreeixidor">Sobreeixidor</option>
+                                    <option value="Escomesa">Escomesa</option>
+                                    <option value="Escomesa Captacio">Escomesa Captacio</option>
+                                    </select>
+                            <button type="button" class="delete-button">Eliminar</button> 
+                        
+                    </div>
+                    <!-- Ficha Entrada6 -->
+                    <div id="entrada6" class="recuadro" style="display:none;">
+                            <h3>Entrada 6:</h3>
+                            
+                            <label for="profundidad6">Profunditat:</label>
+                            <input type="number" id="profundidad6" name="profundidad6" >
+                            <label for="forma6">Forma:</label>
+                            <select id="forma6" name="forma6" >
+                                <option value="">-- Selecciona --</option>
+                                <option value="C">Circular</option>
+                                <option value="R">Rectangulo</option>
+                                <option value="Q">Cuadrado</option>
+                                <option value="G">Galeria</option>   
+                                    </select>
+                            <label for="dimension6_1">Dim1:</label>
+                            <input type="text" id="dimension6_1" name="dimension6_1" >
+                            <label for="dimension6_2">Dim2:</label>
+                            <input type="text" id="dimension6_2" name="dimension6_2" >
+                            <label for="material6">Material:</label>
+                            <select id="material6" name="material6" >
+                            <option value="">-- Selecciona --</option>
+                            <option value="hormigon">FORMIGÓ</option>
+                            <option value="pvc">PVC</option>
+                            <option value="pec">PEC</option>
+                            <option value="obra">Obra</option>  
+                            <option value="prfv">PRFV</option>
+                            <option value="nodefinido">NO DEFINIDO</option>  
+                            </select>
+                            <label for="pozo_direccion6">Pou Origen:</label>
+                            <input type="text" id="pozo_direccion6" name="pozo_direccion6" >
+                            <label for="Altres_Sortidas_6">Tipus Conexió:</label>
+                            <select id="Altres_Sortidas_6" name="Altres_Sortidas_6" class="Altres_Sortidas_6">
+                                    <option value="">-- Selecciona --</option>
+                                    <option value="Sobreeixidor">Sobreeixidor</option>
+                                    <option value="Escomesa">Escomesa</option>
+                                    <option value="Escomesa Captacio">Escomesa Captacio</option>
+                                    </select>
+                            <button type="button" class="delete-button">Eliminar</button> 
+                        
+                    </div>
+                    <!-- Ficha Entrada7 -->
+                    <div id="entrada7" class="recuadro" style="display:none;">
+                            <h3>Entrada 7:</h3>
+                            <label for="profundidad7">Profunditat:</label>
+                            <input type="number" id="profundidad7" name="profundidad7" >
+                            <label for="forma7">Forma:</label>
+                            <select id="forma7" name="forma7" >
+                                    <option value="">-- Selecciona --</option>
+                                    <option value="C">Circular</option>
+                                    <option value="R">Rectangulo</option>
+                                    <option value="Q">Cuadrado</option>
+                                    <option value="G">Galeria</option>  
+                                    </select>
+                            <label for="dimension7_1">Dim1:</label>
+                            <input type="text" id="dimension7_1" name="dimension7_1" >
+                            <label for="dimension7_2">Dim2:</label>
+                            <input type="text" id="dimension7_2" name="dimension7_2" >
+                            <label for="material7">Material:</label>
+                                    <select id="material7" name="material7" >
+                                    <option value="">-- Selecciona --</option>
+                                    <option value="hormigon">FORMIGÓ</option>
+                                    <option value="pvc">PVC</option>
+                                    <option value="pec">PEC</option>
+                                    <option value="obra">Obra</option>  
+                                    <option value="prfv">PRFV</option>
+                                    <option value="nodefinido">NO DEFINIDO</option>  
+                                    </select>
+                            <label for="pozo_direccion7">Pou Origen:</label>
+                            <input type="text" id="pozo_direccion7" name="pozo_direccion7" >
+                            <label for="Altres_Sortidas_7">Tipus Conexió:</label>
+                            <select id="Altres_Sortidas_7" name="Altres_Sortidas_7" class="Altres_Sortidas_7">
+                                    <option value="">-- Selecciona --</option>
+                                    <option value="Sobreeixidor">Sobreeixidor</option>
+                                    <option value="Escomesa">Escomesa</option>
+                                    <option value="Escomesa Captacio">Escomesa Captacio</option>
+                                    </select>
+                            <button type="button" class="delete-button">Eliminar</button> 
+                    </div> 
+                        <!-- recuadro de debajo -->
+                        <div id="infoFija" class="recuadro">  
+                            <label for="data">Data:</label>
+                            <input type="date" id="data" name="data" required>
+                            
+                            <label for="tecnico">Tècnic:</label>
+                            <input type="text" id="tecnico" name="tecnico" required>
+                            
+                            <label for="observacions">Observacions:</label>
+                            <textarea id="observacions" name="observacions" rows="4"></textarea>
+                        </div>
+                    </form>
+                    <div class="button-container">
+                        <!-- Botón para seleccionar fotos -->
+                        <button type="button" id="selectPhotosBtn">Seleccionar Fotos</button>
+                        <input type="file" id="photoInput1" name="photo1" accept="image/*" style="display: none;">
+                        <input type="file" id="photoInput2" name="photo2" accept="image/*" style="display: none;">
+                        <button id="saveAndShowBtn">Guardar y Mostrar Pozo</button>
+                        <button id="submitBtn">Descargar</button>
+                        <button id="newPozoBtn">Nuevo Pozo</button>
+                        
+                    </div>
+                    
+                    <div id="savedPozos" style="display: none;">
+                        <h2>Pozos Guardados</h2>
+                        <div id="pozosList"></div>
+                    </div>
+                <video id="videoElement" autoplay></video>
+                <canvas id="canvasElement" style="display:none;"></canvas>
+                <div id="photoOutput"></div> 
+            
+<script>
+        function convertDotsToCommas(value) {
+            return value.replace('.', ',');
+        }
+
+
+        let selectedButton = document.querySelector('.circle-button.selected');
+                 if (selectedButton) {
+                    selectedButton.classList.add('selected');
+                } else {
+                    console.error('No se encontró el botón seleccionado.');
+                        }
+
+        let savedPozos = []; 
+        // Manejadores de eventos principales
+                document.addEventListener('DOMContentLoaded', function() {
+                document.getElementById('saveAndShowBtn').addEventListener('click', saveAndShowPozo);
+                document.getElementById('submitBtn').addEventListener('click', downloadCSV);
+                document.getElementById('newPozoBtn').addEventListener('click', newPozo);
+                document.getElementById('municipioSelect').addEventListener('change', updateMunicipi);
+                    
+                // Manejo de los botones circulares para abrir fichas
+                document.querySelectorAll('.circle-button').forEach(button => {
+                button.addEventListener('click', function() {
+                        toggleFicha(this.getAttribute('data-target'));
+                    });
+                });
+                    
+                // Manejo de los botones de eliminación en fichas
+                 document.body.addEventListener('click', function(event) {
+                     if (event.target.classList.contains('delete-button')) {
+                    deleteFicha(event.target);
+                    }
+                });
+                    
+                // Manejo de cambios en los selectores de tipo de conexión
+                document.querySelectorAll('.Altres_Sortidas_1, .Altres_Sortidas_2, .Altres_Sortidas_3, .Altres_Sortidas_4, .Altres_Sortidas_5, .Altres_Sortidas_6, .Altres_Sortidas_7').forEach(select => {
+                select.addEventListener('change', function() {
+                        updateColors(this);
+                        handleSobreeixidor(this);
+                            });
+                        });
+                    });
+                    
+        function toggleFicha(targetId) {
+                const targetRecuadro = document.getElementById(targetId);
+                if (targetRecuadro) {
+                targetRecuadro.style.display = targetRecuadro.style.display === 'none' ? 'block' : 'none';
+                document.querySelector(`.circle-button[data-target="${targetId}"]`).classList.toggle('selected');
+                }
+                }
+                    
+        function deleteFicha(button) {
+                const entrada = button.closest('.recuadro');
+                if (entrada) {
+                const inputs = entrada.querySelectorAll('input, select');
+                inputs.forEach(input => {
+                if (input.type === 'text' || input.type === 'number') {
+                input.value = ''; // Limpiar campos de texto y número
+                    } else if (input.tagName === 'SELECT') {
+                        input.selectedIndex = 0; // Deseleccionar opciones en los selectores
+                    }
+                    });
+
+            const targetId = entrada.id;
+                const circleButton = document.querySelector(`.circle-button[data-target="${targetId}"]`);
+                if (circleButton) {
+                circleButton.classList.remove('selected');
+                }
+                entrada.remove(); // Eliminar la ficha
+                }
+                    }               
+        function updateMunicipi() {
+            const municipioSelect = document.getElementById('municipioSelect');
+            const municipiInput = document.getElementById('municipiInput');
+            const selectedMunicipio = municipioSelect.value;
+            const municipioAliases = {
+                            'PALAU': 'PALA', 'MOLLET': 'MOLL', 'SENTMENAT': 'SENT', 'POLINYÀ': 'POLI', 'STA PERPETUA': 'STPM', 'LA LLAGOSTA': 'LLAG',
+                            'SANT FOST': 'SSTFC', 'MARTORELLES': 'MART', 'STA MARIA MARTORELLES': 'SMMA', 'LLIÇA DE VALL': 'LLAV', "LLIÇA D'AMUNT": 'LLAM',
+                            'MONTMELÓ': 'MMLO', 'MONTORNÈS': 'MTOR', 'VALLROMANES': 'VLRM', 'VILANOVA ': 'VLNV', 'PARETS': 'PARE', 'GRANOLLERS': 'GRAN',
+                            'LES FRANQUESES': 'LFRQ', 'CANOVELLES': 'CANO',
+                        };
+                municipiInput.value = municipioAliases[selectedMunicipio] || selectedMunicipio;
+             }       
+             function validateFormData() {
+    const inputs = document.querySelectorAll('input[type="text"], input[type="number"], textarea');
+    for (let input of inputs) {
+        if (input.value.includes(';')) {
+            alert('Por favor, no utilices el carácter ";" en los campos. Solo se admiten "." o ",".');
+            return false; // Retorna falso si se encuentra un ';'
+        }
+    }
+    return true; // Retorna verdadero si todos los campos son válidos
+}
+
+function saveAndShowPozo() {
+    if (validateFormData()) { // Solo procede si la validación es exitosa
+        const pozo = getPozoData();
+        savedPozos.push(pozo);
+        showSavedPozos();
+    }
+}
+
+document.getElementById('saveAndShowBtn').addEventListener('click', saveAndShowPozo);
+  
+function normalizeDecimalInput(value) {
+    return value.replace(',', '.');
+}function normalizeDecimalInput(value) {
+    return value.replace(',', '.');
+}
+
+function getPozoData() {
+    const form = document.getElementById('infraForm');
+    const formData = new FormData(form);
+    const pozo = {
+        municipi: formData.get('municipiInput'),
+        id_pozo: formData.get('id_pozo'),
+        Dades_Gps: formData.get('Dades_Gps'),
+        prop_solera: formData.get('prop_solera'),
+        sortida: {
+            profunditat: convertDotsToCommas(formData.get('profundidad')),
+            forma: formData.get('forma'),
+            dim1: formData.get('dimension0_1'),
+            dim2: formData.get('dimension0_2'),
+            material: formData.get('material'),
+            pouDireccio: formData.get('pozo_direccion'),
+        },
+        data: formData.get('data'),
+        tecnic: formData.get('tecnico'),
+        observacions: formData.get('observacions'),
+        photo1: document.getElementById('photoInput1').files[0] ? document.getElementById('photoInput1').files[0].name : '',
+        photo2: document.getElementById('photoInput2').files[0] ? document.getElementById('photoInput2').files[0].name : '',
+    };
+
+    for (let i = 1; i <= 7; i++) {
+        const entradaDiv = document.getElementById(`entrada${i}`);
+        if (entradaDiv && entradaDiv.style.display !== 'none') {
+            const tipoConexion = formData.get(`Altres_Sortidas_${i}`);
+            pozo[`entrada${i}`] = {
+                profunditat: convertDotsToCommas(formData.get(`profundidad${i}`)),
+                forma: formData.get(`forma${i}`),
+                dim1: formData.get(`dimension${i}_1`),
+                dim2: formData.get(`dimension${i}_2`),
+                material: formData.get(`material${i}`),
+                pouOrigen: formData.get(`pozo_direccion${i}`),
+                altresSortides: tipoConexion,
+                numeroSobreeixidor: tipoConexion === 'Sobreeixidor' ? '910' : ''
+            };
+        }
+    }
+
+    return pozo;
+}
+          
+        function showSavedPozos() {
+            const pozosList = document.getElementById('pozosList');
+                    pozosList.innerHTML = '';
+                    savedPozos.forEach((pozo, index) => {
+                    const pozoDiv = document.createElement('div');
+                    pozoDiv.innerHTML = `<h3>Pozo ${index + 1}</h3>`;
+                    Object.entries(pozo).forEach(([key, value]) => {
+                    const entradaDiv = document.createElement('div');
+                    entradaDiv.innerHTML = `<h4>${key}</h4>`;
+                    if (value && typeof value === 'object') {
+                        Object.entries(value).forEach(([subKey, subValue]) => {
+                            const p = document.createElement('p');
+                            p.textContent = `${subKey}: ${subValue || ''}`;
+                            entradaDiv.appendChild(p);
+                                    });
+                    } else {
+            const p = document.createElement('p');
+                    p.textContent = `${key}: ${value || ''}`;
+                    entradaDiv.appendChild(p);
+                    }
+                    pozoDiv.appendChild(entradaDiv);
+                    });
+                    pozosList.appendChild(pozoDiv);
+                    });
+                    
+                    document.getElementById('savedPozos').style.display = 'block';
+                    }
+                    
+                    function downloadCSV() {
+    const headers = [
+        "Municipi", "ID Pou", "Dades GPS", "Prof. Solera", "Data", "Tècnic", "Observacions",
+        "Sortida Profunditat", "Sortida Forma", "Sortida Dim1", "Sortida Dim2", "Sortida Material", "Sortida Pou Direccio",
+        "Foto 1", "Foto 2"
+    ];
+    for (let i = 1; i <= 7; i++) {
+        headers.push(
+            `Entrada${i} Profunditat`, `Entrada${i} Forma`, `Entrada${i} Dim1`, 
+            `Entrada${i} Dim2`, `Entrada${i} Material`, `Entrada${i} Pou Origen`, 
+            `Entrada${i} Altres Sortides`, `Entrada${i} Numero Sobreeixidor`
+        );
+    }
+
+    const csvContent = [headers.join(";")];
+
+    savedPozos.forEach(pozo => {
+        const row = [
+            pozo.municipi, pozo.id_pozo, pozo.Dades_Gps, pozo.prop_solera, 
+            pozo.data, pozo.tecnic, pozo.observacions,
+            pozo.sortida.profunditat, pozo.sortida.forma, pozo.sortida.dim1,
+            pozo.sortida.dim2, pozo.sortida.material, pozo.sortida.pouDireccio,
+            pozo.photo1, pozo.photo2
+        ];
+
+        // Agregar datos de las entradas 1-7
+        for (let i = 1; i <= 7; i++) {
+            const entrada = pozo[`entrada${i}`] || {};
+            const numeroSobreeixidor = entrada.altresSortides === 'Sobreeixidor' ? '910' : '';
+            row.push(
+                entrada.profunditat || "", entrada.forma || "", entrada.dim1 || "",
+                entrada.dim2 || "", entrada.material || "", entrada.pouOrigen || "",
+                entrada.altresSortides || "", numeroSobreeixidor
+            );
+        }
+
+        csvContent.push(row.join(";"));
+    });
+
+    const blob = new Blob([csvContent.join("\n")], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);    
+    const today = new Date();
+    const dateString = today.getFullYear().toString() +
+                       (today.getMonth() + 1).toString().padStart(2, '0') +
+                       today.getDate().toString().padStart(2, '0');
+    
+    const fileName = `${savedPozos[0].municipi}_${savedPozos[0].id_pozo}_${dateString}.csv`;
+    link.setAttribute("href", url);
+    link.setAttribute("download", fileName);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+                    
+        function newPozo() {
+                clearForm();
+                alert('Formulario limpiado. Puedes empezar un nuevo pozo.');
+            }
+
+                document.addEventListener('DOMContentLoaded', function() {
+            const newPozoBtn = document.getElementById('newPozoBtn');
+                if (newPozoBtn) {
+                    newPozoBtn.addEventListener('click', function() {
+                     console.log('Recargando la página...');
+                                    window.location.reload(true); // Forzar recarga desde el servidor
+                        });
+                    } else {
+                        console.error('El botón Nuevo Pozo no existe en el DOM');
+                    }
+                });
+
+
+        function clearForm() {
+                const pozoContainer = document.getElementById('pozoContainer');
+                if (pozoContainer) {
+                    pozoContainer.innerHTML = ''; // Limpia el contenido del contenedor
+                } else {
+                    console.error('El elemento pozoContainer no existe en el DOM');
+                }
+            }
+        function createNewPozo() {
+                    const pozoContainer = document.getElementById('pozoContainer');
+                    if (pozoContainer) {
+                        // Agrega nuevo contenido al pozo
+                        pozoContainer.innerHTML = '<p>Nuevo Pozo Creado</p>';
+                    } else {
+                        console.error('El elemento pozoContainer no existe en el DOM para crear un nuevo pozo');
+                    }
+                }
+        function updateColors(select) {
+            const entrada = select.closest('.recuadro');
+            const h3 = entrada.querySelector('h3');
+            const circleButton = document.querySelector(`.circle-button[data-target="${entrada.id}"]`);                
+            // Limpiar clases de colores anteriores
+                    h3.classList.remove('sobreeixidor', 'escomesa', 'escomesa-captacio');
+                    circleButton.classList.remove('sobreeixidor', 'escomesa', 'escomesa-captacio');
+                                    // Aplicar nueva clase basada en la selección
+                             switch(select.value) {
+                                        case 'Sobreeixidor':
+                                            h3.classList.add('sobreeixidor');
+                                            circleButton.classList.add('sobreeixidor');
+                                            break;
+                                        case 'Escomesa':
+                                            h3.classList.add('escomesa');
+                                            circleButton.classList.add('escomesa');
+                                            break;
+                                        case 'Escomesa Captacio':
+                                            h3.classList.add('escomesa-captacio');
+                                            circleButton.classList.add('escomesa-captacio');
+                                            break;
+                                    }
+                                }                            
+        function handleSobreeixidor(select) {
+            const entrada = select.closest('.recuadro');
+            let nTxField = entrada.querySelector('.N_tx'); // Cambio aquí para usar la clase correcta
+                                
+                    if (select.value === 'Sobreeixidor') {
+                    if (!nTxField) {
+                                            nTxField = document.createElement('input');
+                                            nTxField.type = 'text';
+                                            nTxField.className = 'N_tx'; // Asegurarse de que la clase es correcta
+                                            nTxField.name = 'N_tx'; // Añadir el atributo name para que se incluya en FormData
+                                            nTxField.value = '910';
+                                            entrada.appendChild(nTxField);
+                                        }
+                     } else {
+                    if (nTxField) {
+                                            nTxField.remove();
+                                        }
+                                    }
+                     }                     
+        function selectForma(formaId) {
+                    document.getElementById(formaId).checked = true;
+                                    // Actualiza el select si es necesario
+            const formaValue = document.getElementById(formaId).value;
+                    document.getElementById('forma').value = formaValue;
+                                }
+        function updateFormaSelector(selectedForma) {
+                    console.log("Forma seleccionada: " + selectedForma);
+                                // Aquí puedes añadir cualquier lógica adicional que necesites ejecutar cuando se cambie la forma
+                            }
+                document.getElementById('selectPhotosBtn').addEventListener('click', function() {
+                document.getElementById('photoInput1').click(); // Abre el diálogo para la primera foto
+                document.getElementById('photoInput1').onchange = function() {
+                document.getElementById('photoInput2').click(); // Abre el diálogo para la segunda foto después de seleccionar la primera
+                                };
+                            });
+
+                document.getElementById('photoInput2').onchange = function() {
+                                // Aquí puedes agregar lógica adicional si necesitas hacer algo justo después de seleccionar la segunda foto
+                            };
+
+                document.getElementById('Dades_Gps').addEventListener('change', function() {
+                            const selectedOption = this.value;
+                            // Remover las clases de colores previas
+                            this.classList.remove('green-background', 'yellow-background', 'red-background');
+
+                            // Aplicar nueva clase basada en la selección
+                            switch(selectedOption) {
+                                case '01': // Opción 0-5
+                                    this.classList.add('green-background');
+                                    break;
+                                case '02': // Opción 5-10
+                                    this.classList.add('yellow-background');
+                                    break;
+                                case '03': // Opción No_GPS
+                                    this.classList.add('red-background');
+                                    break;
+                                default:
+                                    // No aplicar color si no hay selección o es la opción por defecto
+                                    break;
+                            }
+                        });
+  
+                
+    
+                    </script>       
+                        
+</body>
+</html>
